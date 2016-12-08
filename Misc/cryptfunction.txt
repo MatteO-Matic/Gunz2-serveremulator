@@ -1,0 +1,107 @@
+DS:[0D561C25] = 61 ('a')
+
+00EEF4F5  /$  55            PUSH EBP                                 ;  $Function WSASend 9 Encyption happens here
+00EEF4F6  |.  8BEC          MOV EBP,ESP
+00EEF4F8  |.  8A45 08       MOV AL,BYTE PTR [EBP+8]
+00EEF4FB  |.  3245 0C       XOR AL,BYTE PTR [EBP+C]
+00EEF4FE  |.  8B49 24       MOV ECX,DWORD PTR [ECX+24]
+00EEF501  |.  0FB6C0        MOVZX EAX,AL
+00EEF504  |.  66:D3E0       SHL AX,CL
+00EEF507  |.  0FB7C8        MOVZX ECX,AX
+00EEF50A  |.  8BC1          MOV EAX,ECX
+00EEF50C  |.  0FB6C9        MOVZX ECX,CL
+00EEF50F  |.  C1E8 08       SHR EAX,8
+00EEF512  |.  0BC1          OR EAX,ECX
+00EEF514  |.  35 F0000000   XOR EAX,0F0
+00EEF519  |.  5D            POP EBP
+00EEF51A  \.  C2 0800       RET 8
+
+
+Cryptkey
+57, 02, 5B, 04, 2F, 00, 00, 08, 37, 0A, 12, 69, 41, 38, 0F, 78, 1B, 04, 24, 22, 43, 01, 49, 53, 50, 05, 13, 35, 4F, 02, 4D, 05
+                   [00  00] <- calculate from initial packet(NTF_CONNECT_UFS) xor with the nibbles 41, 42
+
+PUSH EBP
+MOV EBP,ESP
+MOV AL,BYTE PTR [EBP+8]
+XOR AL,BYTE PTR [EBP+C]
+MOV ECX,DWORD PTR [ECX+24]
+MOVZX EAX,AL
+SHL AX,CL
+MOVZX ECX,AX
+MOV EAX,ECX
+MOVZX ECX,CL
+SHR EAX,8
+OR EAX,ECX
+XOR EAX,0F0
+POP EBP
+RET 8
+
+
+
+struct s0 {
+    signed char[36] pad36;
+    int32_t f36;
+};
+
+int16_t fun_eef4f5(struct s0* ecx, unsigned char a2, unsigned char a3) {
+    int32_t ecx4;
+    uint32_t eax5;
+    uint32_t ecx6;
+    uint32_t eax7;
+
+    ecx4 = ecx->f36;
+    eax5 = static_cast<uint32_t>(reinterpret_cast<unsigned char>(a2 ^ a3));
+    ecx6 = static_cast<uint32_t>(reinterpret_cast<uint16_t>(*reinterpret_cast<uint16_t*>(&eax5) << *reinterpret_cast<unsigned char*>(&ecx4)));
+    eax7 = (ecx6 >> 8 | static_cast<uint32_t>(*reinterpret_cast<unsigned char*>(&ecx6))) ^ 0xf0;
+    return *reinterpret_cast<int16_t*>(&eax7);
+}
+
+
+
+
+----------------------------------
+
+
+struct s0 {
+    signed char[36] pad36;
+    int32_t f36;
+};
+
+int16_t fun_eef4f5(struct s0* ecx, unsigned char a2, unsigned char a3) {
+    int32_t ecx4;
+    uint32_t eax5;
+    uint32_t ecx6;
+    uint32_t eax7;
+
+    ecx4 = ecx->f36;
+    eax5 = a2 ^ a3;
+    ecx6 = &eax5 << &ecx4;
+    eax7 = (ecx6 >> 8 | &ecx6) ^ 0xf0;
+    return &eax7;
+}
+
+Lot's of a's from client
+09 00 5B 0D C3 00 00 00 00 00 27 04 11 00 00 00 EC 04 1F 6A 13 F8 9D E0 76 DC F4 F6 D5 D4 B8 DF F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 10 CC 
+09 00 5B 0D C3 00 00 00 00 00 27 04 11 00 00 00 EC 04 1F 6A 13 F8 9D E0 76 DC F4 F6 D5 D4 B8 DF F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 
+09 04 2D 0D C3 00 00 00 00 00 10 04 18 00 00 00 EC 04 BE 6A 13 F8 9D E0 41 19 F4 F6 D5 D4 B8 DF F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 F2 8C F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 F2 8C F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 F2 8C F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 F2 8C F4 55 2C 5D B8 D0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 F2 8C F4 55 2C 5D B8 D0 
+
+
+
+-->                                                                                                                                                         ad 7d 9d 65 4f c9 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4f c9 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4f c9 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4f c9 f4 55 2c 5d b8 d0 F5 95 CC 94 9C 65 60 FD FD 71 D5 38 B1 61 BC A1 CD 7D C5 61 AD 7D 9D 65 C5 49 F4 55 2C 5D B8 D0 F5 10 CC
+-->                                                                                                                                                         ad 7d 9d 65 4c b0 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4c b0 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4c b0 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d 65 4c b0 f4 55 2c 5d b8 d0
+
+
+packet encryption offset by 20
+
+
+my a's again
+ad 7d 9d 65 4c b0 f4 55 2c 5d b8 d0 f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1 cd 7d c5 61 ad 7d 9d																				
+
+a's without 0's..
+
+28 7d 18 65 ca c9 71 55 a9 5d 3d d0 70 95 49 94 19 65 e5 fd 78 71 50 38 34 61 39 a1 48 7d 40 61 28 7d 18 65 ca c9 71 55 a9 5d 3d d0 70 95 49 94 19 65 e5 fd 78 71 50 38 34 61 39 a1 48 7d 40 61 28 7d 18 65 ca c9 71 55 a9 5d 3d d0 70 95 49 94 19 65 e5 fd 78 71 50 38 34 61 39 a1
+
+
+Cryptkey
+57, 02, 5B, 04, 2F, 71, 01, 08, 37, 0A, 12, 69, 41, 38, 0F, 78, 1B, 04, 24, 22, 43, 01, 49, 53, 50, 05, 13, 35, 4F, 02, 4D, 05

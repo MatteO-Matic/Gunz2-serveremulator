@@ -1,0 +1,8 @@
+{
+  "status": "ok",
+  "notice": "Temporary Server Maintenance",
+  "gateway": {
+    "ip": "10.0.0.2",
+    "port": 9090
+  }
+}

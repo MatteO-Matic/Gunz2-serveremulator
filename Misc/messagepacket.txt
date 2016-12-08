@@ -1,0 +1,93 @@
+First 2 is shittons of a's
+third is shittons of b's
+
+Seems to start with "13 f8 9d e0 a1 11 f4 b7 31 d4 b8 df f5" then a sequence 
+
+06 c3 have something to do with message length
+
+pos 30, 31 is common over all packets
+d4 b8
+
+Bunch of a's
+
+0000   29 4b b2 06 c3 00 00 00 00 00 00 00 10 02 00 00  )K..............
+0010   ec 04 44 66 13 f8 9d e0 a1 11 f4 b7 31 d4 b8 df  ..Df........1...
+0020   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0030   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0040   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0050   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0060   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0070   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0080   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0090   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+00a0   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+00b0   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+00c0   f5 10 cc                                         ...
+
+Bunch of a's
+
+0000   29 4b b2 06 c3 00 00 00 00 00 00 00 12 02 00 00  )K..............
+0010   ec 04 ab 65 13 f8 9d e0 a1 11 f4 b7 31 d4 b8 df  ...e........1...
+0020   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0030   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0040   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0050   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0060   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0070   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+0080   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+0090   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+00a0   f5 95 cc 94 9c 65 60 fd fd 71 d5 38 b1 61 bc a1  .....e`..q.8.a..
+00b0   cd 7d c5 61 ad 7d 9d 65 12 84 f4 55 2c 5d b8 d0  .}.a.}.e...U,]..
+00c0   f5 10 33                                         ..3
+                               
+
+few q's
+
+0000   09 2f b4 06 65 00 00 00 00 00 00 00 1d 00 00 00  ./..e...........
+0010   ec 04 a5 2e e8 f8 9d e0 4f f0 f4 f6 d5 d4 b8 44  ........O......D
+0020   f5 d5 cc d4 9c 25 60 bd fd 31 d5 78 b1 21 bc e1  .....%`..1.x.!..
+0030   cd 3d c5 21 ad 3d 9d 25 fc 25 f4 15 2c 1d b8 90  .=.!.=.%.%..,...
+0040   f5 d5 cc d4 9c 25 60 bd fd 31 d5 78 b1 21 bc e1  .....%`..1.x.!..
+0050   cd 3d c5 21 ad 3d 9d 25 fc 25 f4 15 2c 1d b8 90  .=.!.=.%.%..,...
+0060   f5 d5 cc 11 27                                   ....'
+
+
+
+f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88 f4 59 2c 51 b8 dc
+
+ends with f5 10 ff
+
+bunch of b's
+
+0000   90 2b 34 31 72 e1 08 00 27 43 3c 31 08 00 45 00  .+41r...'C<1..E.
+0010   00 eb 2b b5 40 00 80 06 ba 4e 0a 00 00 08 0a 00  ..+.@....N......
+0020   00 02 0f 64 23 82 d8 cc a3 48 60 43 ea c9 50 18  ...d#....H`C..P.
+0030   00 fe d4 0e 00 00 29 4b b2 06 c3 00 00 00 00 00  ......)K........
+0040   00 00 11 02 00 00 ec 04 17 67 13 f8 9d e0 a1 11  .........g......
+0050   f4 b7 31 d4 b8 df f5 99 cc 98 9c 69 60 f1 fd 7d  ..1........i`..}
+0060   d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88  .4.m...q.m.q.i..
+0070   f4 59 2c 51 b8 dc f5 99 cc 98 9c 69 60 f1 fd 7d  .Y,Q.......i`..}
+0080   d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88  .4.m...q.m.q.i..
+0090   f4 59 2c 51 b8 dc f5 99 cc 98 9c 69 60 f1 fd 7d  .Y,Q.......i`..}
+00a0   d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88  .4.m...q.m.q.i..
+00b0   f4 59 2c 51 b8 dc f5 99 cc 98 9c 69 60 f1 fd 7d  .Y,Q.......i`..}
+00c0   d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88  .4.m...q.m.q.i..
+00d0   f4 59 2c 51 b8 dc f5 99 cc 98 9c 69 60 f1 fd 7d  .Y,Q.......i`..}
+00e0   d5 34 b1 6d bc ad cd 71 c5 6d ad 71 9d 69 12 88  .4.m...q.m.q.i..
+00f0   f4 59 2c 51 b8 dc f5 10 ff                       .Y,Q.....
+
+bunch of b's
+
+0000   09 2f b4 06 c3 00 00 00 00 00 00 00 10 00 00 00  ./..............
+0010   ec 04 68 6b 13 f8 9d e0 4f f0 f4 b7 31 d4 b8 df  ..hk....O...1...
+0020   f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad  .....i`..}.4.m..
+0030   cd 71 c5 6d ad 71 9d 69 fc 69 f4 59 2c 51 b8 dc  .q.m.q.i.i.Y,Q..
+0040   f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad  .....i`..}.4.m..
+0050   cd 71 c5 6d ad 71 9d 69 fc 69 f4 59 2c 51 b8 dc  .q.m.q.i.i.Y,Q..
+0060   f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad  .....i`..}.4.m..
+0070   cd 71 c5 6d ad 71 9d 69 fc 69 f4 59 2c 51 b8 dc  .q.m.q.i.i.Y,Q..
+0080   f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad  .....i`..}.4.m..
+0090   cd 71 c5 6d ad 71 9d 69 fc 69 f4 59 2c 51 b8 dc  .q.m.q.i.i.Y,Q..
+00a0   f5 99 cc 98 9c 69 60 f1 fd 7d d5 34 b1 6d bc ad  .....i`..}.4.m..
+00b0   cd 71 c5 6d ad 71 9d 69 fc 69 f4 59 2c 51 b8 dc  .q.m.q.i.i.Y,Q..
+00c0   f5 10 cc                                         ...
