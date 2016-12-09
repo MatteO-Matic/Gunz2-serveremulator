@@ -17,15 +17,30 @@ def modrecv(self):
     hexdata = binascii.b2a_hex(data)
     show_output = 0
     show_data = 0
-    show_data_decrypted = 1
+    show_data_decrypted = 0
     show_flags = 1
     show_decrypted = 1   
     sender = "server" if self.s.getpeername() == servername else "client"
     is_server = 1 if self.s.getpeername() == servername else 0
-   
+  
+    flags = struct.unpack("I", data[:4])
+    is_encrypted = (flags[0] >> 3) & 1
+    
+    show_data_decrypted = is_encrypted
+    show_data = not is_encrypted
+
+
     if len(data) < 25: #assume it's a keep alive packet
-        show_output = 0
+        show_output =0 
         #handle_ping(self)
+    elif data[16:18] == '\x06\x00': #NTF_AUTH_FAILED
+        show_output = 1
+        show_data_decrypted = 0
+        show_data = 1
+    elif data[16:18] == '\x08\x00': #Initial from client
+        show_output =1
+        show_data_decrypted = 0
+        show_data = 1
     elif data[16:18] =='\xfe\x10': #NTF_MATCH_PLAYER_COUNT
         show_output = 0
     elif data[16:18] == '\xec\04': #REQ_CHATTING_CHAT_CHANNEL
@@ -44,18 +59,18 @@ def modrecv(self):
 
     if show_output:
         pID = binascii.b2a_hex(data[16:18])
-        packet_header = "| S:{0} | L:{1} | {2} | ID:{3}".format(
+        
+        packet_header = "| S:{0} | L:{1} | {2} | E:{4} | ID:{3}".format(
                 is_server, 
                 len(data), 
                 parselog.get_packetname(data[16:18]), 
-                pID[3:4]+pID[0:2])
+                pID[3:4]+pID[0:2],
+                is_encrypted)
         
         print packet_header
 
         if show_flags:
-            flags = struct.unpack("I", data[:4])
             print "flags: {0:b}".format(flags[0])
-            print (flags[0] >> 3) & 1
         
         if show_data:
             t = iter(binascii.b2a_hex(self.data))
