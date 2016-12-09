@@ -2,7 +2,6 @@
 
 import socket
 
-
 TCP_IP = ''
 TCP_PORT = 9090
 BUFFER_SIZE = 8192
@@ -12,7 +11,7 @@ s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
 
 conn, addr = s.accept()
-print 'Connection address:', addr
+print ('Connection address:', addr)
 while 1:
 
     sdata = "\x02\x00\x00\x00\x14\x00\x00\x00\x00\x60\x07\x00\x00\x00\x00\x00\x05\x00\x00\x00"
@@ -20,10 +19,10 @@ while 1:
     
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    print "\n"
+    print ("\n")
     print(":".join("{:02x}".format(ord(c)) for c in data))
     #print "received data:", data
-    print "\n"
+    print ("\n")
     
     sdata = "\x02\x00\x00\x00\x18\x00\x00\x00\x00\x60\x07\x00\x00\x00\x00\x00\x07\x00\x00\x00\x44\x49\x57\xc3"
     conn.send(sdata)

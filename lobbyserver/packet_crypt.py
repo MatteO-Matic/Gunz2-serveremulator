@@ -38,7 +38,6 @@ def init_cryptkey(seed):
     global isInit
     isInit= 1
    # print binascii.b2a_hex(_cryptkey)
-
 #init_cryptkey(2685)
 
 def singleencrypt(msg, key):
@@ -57,7 +56,6 @@ def singleencrypt(msg, key):
 #singleencrypt('\x61', '\x04')
 
 def _encrypt(msgchar, cryptkey):
-    
     newstring = ""
     for i, c in enumerate(msgchar):
         a = ord(c)
@@ -76,7 +74,7 @@ def _encrypt(msgchar, cryptkey):
         
 def decrypt_printsafe(msgchar):
     if _cryptkey == "":
-        print "cryptkey isn't set yet."
+        print ("cryptkey isn't set yet.")
         return ""
     plain = _decrypt(msgchar, _cryptkey)
     plainsafe = ""
@@ -87,21 +85,20 @@ def decrypt_printsafe(msgchar):
             plainsafe += "."
     return plainsafe
 
-
 def decrypt(msgchar):
     if _cryptkey == "":
-        print "cryptkey isn't set yet."
+        print ("cryptkey isn't set yet.")
         return ""
     return _decrypt(msgchar, _cryptkey)
 
 def encrypt(msgchar):
     if _cryptkey == "":
-        print "cryptkey isn't set yet."
+        print ("cryptkey isn't set yet.")
         return ""
     return _encrypt(msgchar, _cryptkey)
 
 def _decrypt(msgchar, cryptkey):       
-        
+    
     plaintext = ""
     for i, c in enumerate(msgchar):
         a = ord(c)
@@ -111,19 +108,20 @@ def _decrypt(msgchar, cryptkey):
         b <<= 6;
         b = (a | b);
         b ^= ord(cryptkey[i % 32]);
-
+        
         
         plaintext += (chr(b))
     return plaintext
 
 
 def dostuff():
+    
     #print binascii.b2a_hex( _message)
     #nstr = encrypt(_message, _cryptkey)
     #print " ".join("{:02x}".format(ord(c)) for c in nstr)
     #plainstr = (local_decrypt(_message[20:], _cryptkeyfake))
     
-    print  _decrypt(_message, _cryptkeyfake).encode("hex")
+    print  (_decrypt(_message, _cryptkeyfake).encode("hex"))
     
     
     #print s
@@ -142,19 +140,17 @@ def dostuff():
     #encrypted_again = encrypt(plainstr, _cryptkeyfake)
     #plain_again = local_decrypt(encrypted_again[20:], _cryptkeyfake)
 
-
-
 def bruteforceOffset():
     for i in range (0, 50):
         plainstr = _decrypt(_message[i:], _cryptkeyfake) 
         sout = ""
-        print ""
+        print ("")
         for c in plainstr:
             if ord(c)>32 and  ord(c) < 128:
                 sout += c
             else:
                 sout += "."
-        print "i:{0}  -".format(i), sout
+        print ("i:{0}  -".format(i), sout)
 #bruteforceOffset()
 #print decrypt(_message)
 #bruteforceOffset()
