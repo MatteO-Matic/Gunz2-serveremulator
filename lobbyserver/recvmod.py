@@ -28,7 +28,7 @@ def modrecv(self):
     
     show_data_decrypted = is_encrypted
     show_data = not is_encrypted
-
+    
 
     if len(data) < 25: #assume it's a keep alive packet
         show_output =0 
@@ -59,6 +59,8 @@ def modrecv(self):
 
     if show_output:
         pID = binascii.b2a_hex(data[16:18])
+
+        
         
         packet_header = "| S:{0} | L:{1} | {2} | E:{4} | ID:{3}".format(
                 is_server, 
@@ -67,15 +69,17 @@ def modrecv(self):
                 pID[3:4]+pID[0:2],
                 is_encrypted)
         
-        print packet_header
+        print (packet_header)
+        
+        
 
         if show_flags:
-            print "flags: {0:b}".format(flags[0])
+            print ("flags: {0:b}".format(flags[0]))
         
         if show_data:
             t = iter(binascii.b2a_hex(self.data))
             pdata = " ".join(a+b for a,b in zip(t,t)) 
-            print re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL)
+            print (re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL))
 
         if show_data_decrypted:
             if packet_crypt.isInit:
@@ -83,17 +87,22 @@ def modrecv(self):
                 cdata = packet_crypt.decrypt(self.data[20:]) 
                 t = iter(binascii.b2a_hex(cdata))
                 pdata = " ".join(a+b for a,b in zip(t,t))
-                print re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL)
+                
+                
+                plength = struct.unpack("I", cdata[:4])
+                print (plength)
+                
+                print (re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL))
 
         
         if show_decrypted:
-            print '\n'+packet_crypt.decrypt_printsafe(data[20:]) #Don't include header
+            print ('\n'+packet_crypt.decrypt_printsafe(data[20:])) #Don't include header
         # for i in range(0, len(pdata)/60):
         #     it = i*60
         #     it2 = i*20
         #     print re.sub("(.{85})", "\\1\n", pdata[it:it+60]+"     "+decrypteddata[it2:it2+20], re.DOTALL)
 
-        print "\n"
+        print ("\n")
     
 def handle_ping(self):
     data = self.data
@@ -114,9 +123,9 @@ def handle_ping(self):
    # if(hex(ord(data[0])) == hex(ord(pdata[0]))):
     
     if(show_output):
-        print "Swapping to forged packet"
+        print ("Swapping to forged packet")
         print (":".join("{:02x}".format(ord(c)) for c in pdata))
-        print "--->"
+        print ("--->")
         print (":".join("{:02x}".format(ord(c)) for c in data))
-        print "\n"
+        print ("\n")
     #self.data = pdata 
