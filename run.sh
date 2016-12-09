@@ -1,5 +1,6 @@
 #!/bin/bash
 cd ./gateserver
-python2.7 ./gateserver.py &
+terminix -a session-add-right -x "python2.7 ./gateserver.py"
 cd ../lobbyserver
-python2.7 lobbyserver.py &
+clear
+python2.7 lobbyserver.py
