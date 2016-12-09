@@ -1,8 +1,0 @@
-Steam:
-00865910  /.  55            PUSH EBP #$Function Login
-
-
-
-
-Thai:
-0089FAF0  /. 55             PUSH EBP #$Function Login
