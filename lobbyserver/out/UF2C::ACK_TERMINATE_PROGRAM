@@ -1,0 +1,32 @@
+SData | S:1 | L:27
+Hdata | Size:27 | PID: c44(UF2C::ACK_TERMINATE_PROGRAM)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 44 0c 00
+
+....D..
+
+
+SData | S:1 | L:27
+Hdata | Size:27 | PID: c44(UF2C::ACK_TERMINATE_PROGRAM)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 44 0c 00
+
+....D..
+
+
+SData | S:1 | L:27
+Hdata | Size:27 | PID: c44(UF2C::ACK_TERMINATE_PROGRAM)
+1101011110001101000000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 44 0c 00
+
+....D..
+
+
+SData | S:1 | L:27
+Hdata | Size:27 | PID: c44(UF2C::ACK_TERMINATE_PROGRAM)
+1101011110000001000000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 44 0c 00
+
+....D..

@@ -1,0 +1,32 @@
+SData | S:0 | L:27
+Hdata | Size:27 | PID: 3fc(C2UF::REQ_TERMINATE_PROGRAM)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 fc 03 00
+
+.......
+
+
+SData | S:0 | L:27
+Hdata | Size:27 | PID: 3fc(C2UF::REQ_TERMINATE_PROGRAM)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 fc 03 00
+
+.......
+
+
+SData | S:0 | L:27
+Hdata | Size:27 | PID: 3fc(C2UF::REQ_TERMINATE_PROGRAM)
+110110101111110110010101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 fc 03 00
+
+.......
+
+
+SData | S:0 | L:27
+Hdata | Size:27 | PID: 3fc(C2UF::REQ_TERMINATE_PROGRAM)
+110100111101010101110001001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+07 00 00 00 fc 03 00
+
+.......

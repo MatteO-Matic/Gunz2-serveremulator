@@ -1,0 +1,32 @@
+SData | S:1 | L:31
+Hdata | Size:31 | PID: c12(UF2C::NTF_CHANGE_STATE)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0b 00 00 00 12 0c 00 04 00 00 00
+
+...........
+
+
+SData | S:1 | L:31
+Hdata | Size:31 | PID: c12(UF2C::NTF_CHANGE_STATE)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0b 00 00 00 12 0c 00 04 00 00 00
+
+...........
+
+
+SData | S:1 | L:31
+Hdata | Size:31 | PID: c12(UF2C::NTF_CHANGE_STATE)
+1101011110000000110000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0b 00 00 00 12 0c 00 04 00 00 00
+
+...........
+
+
+SData | S:1 | L:31
+Hdata | Size:31 | PID: c12(UF2C::NTF_CHANGE_STATE)
+1101011111011101000000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0b 00 00 00 12 0c 00 04 00 00 00
+
+...........

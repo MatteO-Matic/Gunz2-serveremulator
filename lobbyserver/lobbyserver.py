@@ -7,7 +7,8 @@ import binascii
 import recvmod
 import struct
 
-buffer_size =16384
+
+buffer_size =4096
 delay = 0.00001
 forward_to = ('54.193.89.40', 20100)
 #fo = open("foo.txt", "rw+")
@@ -49,8 +50,11 @@ class TheServer:
                     break
                  
                 data = self.s.recv(8)
-                if not data:
-                    continue
+               # if not data:
+               #     continue
+                if len(data) == 0:
+                    self.on_close()
+                    break
 
                 rawflags, hsize  = struct.unpack("II", data[:8])
 

@@ -1,0 +1,40 @@
+SData | S:1 | L:49
+Hdata | Size:49 | PID: c1c(UF2C::NTF_CONNECT_UFS)
+Flags | Normal:1 | Ping:0 | Encrypted:0 | Compressed:0 |
+21 d8 77 0d 31 00 00 00 00 58 d0 77 22 e0 93 03 1c 0c ba 03 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 df e4 21 20 00 00 00 
+00 78 17 00 00 f4 0f 00 00
+
+,>g8w.=4.2..}.../8...#.ol...s
+
+
+SData | S:1 | L:49
+Hdata | Size:49 | PID: c1c(UF2C::NTF_CONNECT_UFS)
+Flags | Normal:1 | Ping:0 | Encrypted:0 | Compressed:0 |
+21 48 78 0d 31 00 00 00 00 58 d0 77 2c 95 98 03 1c 0c 3f 04 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 f8 e6 21 20 00 00 00 
+00 c7 3d 00 00 e9 0f 00 00
+
+,>g8..=4.2..}:../8....:olC..s
+
+
+SData | S:1 | L:49
+Hdata | Size:49 | PID: c1c(UF2C::NTF_CONNECT_UFS)
+1101011110011101100000100001
+Flags | Normal:1 | Ping:0 | Encrypted:0 | Compressed:0 |
+21 d8 79 0d 31 00 00 00 00 58 d0 77 80 9a 98 03 1c 0c 46 03 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 fb e6 21 20 00 00 00 
+00 a3 44 00 00 09 10 00 00
+
+,>g8.}=4.2..}.../8....dol{+.s
+
+
+SData | S:1 | L:49
+Hdata | Size:49 | PID: c1c(UF2C::NTF_CONNECT_UFS)
+1101011101111101110000100001
+Flags | Normal:1 | Ping:0 | Encrypted:0 | Compressed:0 |
+21 dc 77 0d 31 00 00 00 00 58 d0 77 78 9b 98 03 1c 0c f6 02 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 fc e6 21 20 00 00 00 
+00 82 14 00 00 09 10 00 00
+
+,>g8.-=4.2..};../8....pol{+.s

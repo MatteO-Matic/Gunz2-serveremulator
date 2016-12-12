@@ -1,0 +1,32 @@
+SData | S:1 | L:33
+Hdata | Size:33 | PID: 038(UF2C::NTF_MAIL_LIST)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0d 00 00 00 38 10 00 00 00 00 00 00 00
+
+....8........
+
+
+SData | S:1 | L:33
+Hdata | Size:33 | PID: 038(UF2C::NTF_MAIL_LIST)
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0d 00 00 00 38 10 00 00 00 00 00 00 00
+
+....8........
+
+
+SData | S:1 | L:33
+Hdata | Size:33 | PID: 038(UF2C::NTF_MAIL_LIST)
+1101011111000100100000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0d 00 00 00 38 10 00 00 00 00 00 00 00
+
+....8........
+
+
+SData | S:1 | L:33
+Hdata | Size:33 | PID: 038(UF2C::NTF_MAIL_LIST)
+1101011111011101000000101001
+Flags | Normal:1 | Ping:0 | Encrypted:1 | Compressed:0 |
+0d 00 00 00 38 10 00 00 00 00 00 00 00
+
+....8........
