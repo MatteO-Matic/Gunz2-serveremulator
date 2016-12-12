@@ -5,11 +5,12 @@ import time
 import sys
 import binascii
 import recvmod
+import struct
 
-buffer_size = 16384
+buffer_size =16384
 delay = 0.00001
 forward_to = ('54.193.89.40', 20100)
-fo = open("foo.txt", "rw+")
+#fo = open("foo.txt", "rw+")
 serving_port = 9090
 
 class Forward:
@@ -46,8 +47,22 @@ class TheServer:
                 if self.s == self.server:
                     self.on_accept()
                     break
+                 
+                data = self.s.recv(8)
+                if not data:
+                    continue
 
-                self.data = self.s.recv(buffer_size)
+                rawflags, hsize  = struct.unpack("II", data[:8])
+
+                
+                #Gather full packet 
+                while len(data) < hsize:
+                    packet = self.s.recv(hsize - len(data))
+                    if not packet:
+                        continue
+                    data += packet
+                self.data = data
+
                 if len(self.data) == 0:
                     self.on_close()
                     break
@@ -90,42 +105,11 @@ class TheServer:
         data = self.data
         self.channel[self.s].send(data)
 
-        # here we can parse and/or modify the data before send forward
-       # hexdata = binascii.b2a_hex(data)
-        
-       # cmddata = hexdata[0:23]
-       # if cmddata == "020000001800000000000000": 
-       #     packetcounter = hexdata[24:31]
-       #     isclient = hexdata[32:33]
-       #     unknownflags = hexdata[34:39]
-       #     checksum = hexdata[40:47]
-       #     print cmddata+packetcounter+isclient+unknownflags+checksum
-       #     print "\n"
-       # else: 
-       #     print ("{}".format(self.s))
-       #     print ("PacketN: {}".format(self.packet_count))
-       #     print (":".join("{:02x}".format(ord(c)) for c in data))
-       #     print "\n"
-
-       # self.packet_count+=1
-       # self.channel[self.s].send(data)
-    
-       # 02:00:00:00:18:00:00:00:00:00:00:00:56:00:00:00:01:00:00:00:aa:13:4c:c6
-       #[-----------------------------------][---------] |           [----------]
-       #          Same every session         |           |             checksum?
-       #                                     |           |
-       #                Packet_counter(start 0) increment|
-       #                righthandside after FF           |
-       #                                                 |
-       #                                                1 client; 0 host
-
-
 
 if __name__ == '__main__':
         server = TheServer('', serving_port)
         try:
             server.main_loop()
         except KeyboardInterrupt:
-            fo.close()
             print ("Ctrl C - Stopping server")
 sys.exit(1)
