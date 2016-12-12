@@ -31,3 +31,5 @@ WSTR {
     UINT16 Length;
     BYTE[] Str;
 }
+
+

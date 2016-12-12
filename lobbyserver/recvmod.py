@@ -41,7 +41,7 @@ def modrecv(self):
     show_flags = 1
     show_decrypted_text = 1
 
-    save_tofile = 1
+    save_tofile = 0
     
     sender = "server" if self.s.getpeername() == servername else "client"
     is_server = 1 if self.s.getpeername() == servername else 0
@@ -58,7 +58,7 @@ def modrecv(self):
     #show_data = 1
     #show_data_decrypted = 0
     
-    emulate_packet(self)
+    #emulate_packet(self)
 
     if len(data) < 25: #assume it's a keep alive packet
         show_output =1 
@@ -180,27 +180,20 @@ def modrecv(self):
 def emulate_packet(self):
     data = self.data
 
-    #Rememeber to emulate NTF_HOLEPUNCHING_RESULT later
     pID = data[16:18]
-
-    if pID == '\x06\x00': #NTF_AUTH_FAILED C
+    
+    if pID == '\x05\x00': #NTF_HOLEPUNCHING_RESULT
+        self.data = "\x02\x00\x00\x00\x14\x00\x00\x00\x00\x98\x07\x00\x00\x00\x00\x00\x05\x00\x00\x00"
+    elif pID == '\x06\x00': #NTF_AUTH_FAILED C
         pass
     elif pID == '\x07\x00': 
         #move along, nothing to see here 
         millis = int((time.time() * 1000))
-        millis = millis + 2686079995+103+8+5#2686079745
-        #millis = millis + 2686080000#2686079745
+        #millis = millis + 2686079995+103+8+5#2686079745
         htime = (binascii.hexlify(struct.pack('I', int((str(millis)[3:])))))
-
-        #self.data=""
-        #t = iter(binascii.b2a_hex(data))
-        #pdata = " ".join(a+b for a,b in zip(t,t)) 
-       
-        #print_data = (re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL))
-        #print (print_data)
-
-        #print (htime)
-        #self.data = "\x02\x00\x00\x00\x18\x00\x00\x00\x00\x98\x07\x00\x00\x00\x00\x00\x07\x00\x00\x00"+htime.encode("hex")
+        self.data = "\x02\x00\x00\x00\x18\x00\x00\x00\x00\x98\x07\x00\x00\x00\x00\x00\x07\x00\x00\x00"+htime.encode("hex")
+    elif pID == '\x1c\x0c':
+        self.data = "\x21\x88\x78\x0d\x31\x00\x00\x00\x00\xf8\x3a\x0e\x21\xf1\x93\x03\x1c\x0c\x30\x04\x1d\x00\x00\x00\x1c\x0c\x00\x00\x00\x10\x00\x01\x00\xe8\xe4\x21\x20\x00\x00\x00\x00\xa8\x5b\x00\x00\xed\x0f\x00\x00"
 
 
     else:
