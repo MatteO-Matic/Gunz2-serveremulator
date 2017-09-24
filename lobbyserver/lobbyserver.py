@@ -7,11 +7,9 @@ import binascii
 import recvmod
 import struct
 
-
-buffer_size =4096
+buffer_size = 4096
 delay = 0.00001
 forward_to = ('54.193.89.40', 20100)
-#fo = open("foo.txt", "rw+")
 serving_port = 9090
 
 class Forward:
@@ -23,7 +21,7 @@ class Forward:
             self.forward.connect((host, port))
             return self.forward
         except Exception as e:
-            print (e)
+            print(e)
             return False
 
 class TheServer:
@@ -39,7 +37,8 @@ class TheServer:
 
     def main_loop(self):
         self.input_list.append(self.server)
-        print ("Serving on port {0} to {1}:{2}".format(serving_port,forward_to[0], forward_to[1]))
+        print("Serving on port {0} to {1}:{2}".format(
+            serving_port, forward_to[0], forward_to[1]))
         while 1:
             time.sleep(delay)
             ss = select.select
@@ -48,18 +47,15 @@ class TheServer:
                 if self.s == self.server:
                     self.on_accept()
                     break
-                 
+
                 data = self.s.recv(8)
-               # if not data:
-               #     continue
                 if len(data) == 0:
                     self.on_close()
                     break
 
-                rawflags, hsize  = struct.unpack("II", data[:8])
+                rawflags, hsize = struct.unpack("II", data[:8])
 
-                
-                #Gather full packet 
+                # Gather full packet
                 while len(data) < hsize:
                     packet = self.s.recv(hsize - len(data))
                     if not packet:
@@ -77,19 +73,19 @@ class TheServer:
         forward = Forward().start(forward_to[0], forward_to[1])
         clientsock, clientaddr = self.server.accept()
         if forward:
-            print (clientaddr, "has connected")
+            print(clientaddr, "has connected")
             self.input_list.append(clientsock)
             self.input_list.append(forward)
             self.channel[clientsock] = forward
             self.channel[forward] = clientsock
         else:
-            print ("Can't establish connection with remote server.")
-            print ("Closing connection with client side", clientaddr)
+            print("Can't establish connection with remote server.")
+            print("Closing connection with client side", clientaddr)
             clientsock.close()
 
     def on_close(self):
-        print (self.s.getpeername(), "has disconnected")
-        #remove objects from input_list
+        print(self.s.getpeername(), "has disconnected")
+        # remove objects from input_list
         self.input_list.remove(self.s)
         self.input_list.remove(self.channel[self.s])
         out = self.channel[self.s]
@@ -104,16 +100,16 @@ class TheServer:
     def on_recv(self):
         global recvmod
         recvmod = reload(recvmod)
-        
+
         recvmod.modrecv(self)
         data = self.data
         self.channel[self.s].send(data)
 
 
 if __name__ == '__main__':
-        server = TheServer('', serving_port)
-        try:
-            server.main_loop()
-        except KeyboardInterrupt:
-            print ("Ctrl C - Stopping server")
+    server = TheServer('', serving_port)
+    try:
+        server.main_loop()
+    except KeyboardInterrupt:
+        print("Ctrl C - Stopping server")
 sys.exit(1)
