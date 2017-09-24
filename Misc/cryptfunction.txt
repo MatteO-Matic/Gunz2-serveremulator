@@ -19,7 +19,7 @@ DS:[0D561C25] = 61 ('a')
 
 Cryptkey
 57, 02, 5B, 04, 2F, 00, 00, 08, 37, 0A, 12, 69, 41, 38, 0F, 78, 1B, 04, 24, 22, 43, 01, 49, 53, 50, 05, 13, 35, 4F, 02, 4D, 05
-                   [00  00] <- calculate from initial packet(NTF_CONNECT_UFS) xor with the nibbles 41, 42
+                   [00  00] <- calculate from initial packet(NTF_CONNECT_UFS) xor with the bytes 41, 42
 
 PUSH EBP
 MOV EBP,ESP

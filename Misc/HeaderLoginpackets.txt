@@ -1,0 +1,40 @@
+SData | S:1 | L:49
+Hdata | Size:49 | PID: c1c(UF2C::NTF_CONNECT_UFS)
+Flags | Normal:1 | Ping:0 | Encrypted:0 | Compressed:0 |
+
+
+
+21 88 78 0d 31 00 00 00 00 f8 3a 0e 21 f1 93 03 1c 0c 30 04 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 e8 e4 21 20 00 00 00 
+00 a8 5b 00 00 ed 0f 00 00
+
+
+21 14 79 0d 31 00 00 00 00 00 78 0d 3d 02 94 03 1c 0c aa 02 
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 f1 e4 21 20 00 00 00 
+00 0b 0b 00 00 4a 10 00 00
+
+
+HEADER:
+flags
+21 14 79 0d
+
+size
+31 00 00 00
+
+unk1
+00 f8 3a 0e
+00 00 78 0d
+
+
+packet counter
+21 f1 93 03
+<->
+3d 02 94 03
+
+ID
+1c 0c
+
+Checksum(?)
+30 04 
+<->
+aa 02
