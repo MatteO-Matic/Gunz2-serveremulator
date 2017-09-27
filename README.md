@@ -43,8 +43,8 @@ This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
 | 21 88 78 0d | 31 00 00 00 | 00 f8 3a 0e | 21 f1 93 03 | 1c 0c | 30 04 |
 
 #### Packet flags
-**21 88 78 0d**
-21 88:	1000 0100 0001 0001
+**21 88 78 0d**<br/>
+21 88:	1000 0100 0001 0001<br/>
 78 0D:	0001 1110 1011 0000
 
 | normal | ping | unknown | encrypted | compressed | unknown.. |
@@ -54,9 +54,9 @@ This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
 NTF_CONNECT_UFS flags tells us that the packet is
 Normal:1 | Ping:0 | Encrypted:0 | Compressed:0
 
-#### Packet ID
-#### Payload
-**1d 00 00 00**
+#### Packet ID's and names
+### Payload
+**1d 00 00 00**<br/>
 first 4 bytes in a normal packet indicates the payload size
 
 
@@ -78,7 +78,6 @@ def init_cryptkey(seed):
     cryptkey = cryptkey[:4] + packed + cryptkey[6:]
 ```
 
-### Packet ID's and names
 ### Compression/Decompresstion
 ### Encyption translated into python
 ```python
