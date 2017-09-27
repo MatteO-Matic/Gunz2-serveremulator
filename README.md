@@ -32,14 +32,14 @@ Bytes at position 4 and 5(e1,3c) is different for each new connection, the bytes
 [See more on initial packet.](#initial-packet)
 
 ### Packet header
-This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
+This is the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
 ```
 21 88 78 0d 31 00 00 00 00 f8 3a 0e 21 f1 93 03 1c 0c 30 04
 1d 00 00 00 1c 0c 00 00 00 10 00 01 00 e8 e4 21 20 00 00 00
 00 a8 5b 00 00 ed 0f 00 00
 ```
 
-| flags       | size        | unknown     | counter     | ID    | checksum |
+| flags       | packet size | unknown     | counter     | ID    | checksum |
 |:-----------:|:-----------:|:-----------:|:-----------:|:-----:|:-----:|
 | 21 88 78 0d | 31 00 00 00 | 00 f8 3a 0e | 21 f1 93 03 | 1c 0c | 30 04 |
 
@@ -55,7 +55,17 @@ This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
 NTF_CONNECT_UFS flags tells us that the packet is
 Normal:1 | Ping:0 | Encrypted:0 | Compressed:0
 
-#### Packet ID's and names
+#### Packet IDs and names
+Dumped IDs and respective names can be find in [log.txt](lobbyservber/log.txt)
+```python
+def get_packetname(ID):
+    with open("./log.txt") as f:
+        ID = "{0:X}".format(ID)
+        for line in f:
+            if line.startswith("ID:={num:0>8}".format(num=ID)):
+                next(f)
+                return next(f)[14:-3]
+```
 ### Payload
 **1d 00 00 00**<br/>
 first 4 bytes in a normal packet indicates the payload size
@@ -65,9 +75,9 @@ Packet with encryption flag needs to be decrypted, should include the full paylo
 ```python
 cdata = packet_crypt.decrypt(data[20:])
 ```
-#### Compression/Decompresstion
+#### Compression/Decompression
 Some packets are encrypted and compressed, first decrypt then decompress the payload.
-Don't include the first 4 bytes of the payload with decompresstion. The 4 bytes represent the payload size.
+Don't include the first 4 bytes of the payload with decompression. The 4 bytes represent the payload size.
 ```python
 cdata = packet_crypt.decrypt(data[20:])
 decdata = (zlib.decompress(cdata[4:]))
@@ -79,7 +89,7 @@ if gpacket.pid_name == "UF2C::NTF_CONNECT_UFS": # init packet
   seed = struct.unpack("!H", data[41:43])
   packet_crypt.init_cryptkey(seed[0])
 ```
-To get the correct 2 bytes for the cryptkey grab the unsigned short(Big-Endian) from the initial packet "NTF_CONNECT_UFS" and xor it with a key \x34\x06.
+To get the correct 2 bytes for the cryptkey grab the unsigned short from the initial packet "NTF_CONNECT_UFS" and xor it with a key \x34\x06.
 I got the key through bruteforce.
 
 ```
@@ -91,7 +101,7 @@ def init_cryptkey(seed):
     cryptkey = cryptkey[:4] + packed + cryptkey[6:]
 ```
 
-### Encryptions/Decryptions in python
+### Encryptions/Decryption in python
 ```python
 def _encrypt(msgchar, cryptkey):
     newstring = ""
