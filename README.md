@@ -31,7 +31,35 @@ Output of the cryptkey sample
 Bytes at position 4 and 5(e1,3c) is different for each new connection, the bytes are set by the initial packet when the connection are established.
 
 ### Packet header
+This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
+```
+21 88 78 0d 31 00 00 00 00 f8 3a 0e 21 f1 93 03 1c 0c 30 04
+1d 00 00 00 1c 0c 00 00 00 10 00 01 00 e8 e4 21 20 00 00 00
+00 a8 5b 00 00 ed 0f 00 00
+```
+
+| flags       | size        | unknown     | counter     | ID    | checksum |
+|:-----------:|:-----------:|:-----------:|:-----------:|:-----:|:-----:|
+| 21 88 78 0d | 31 00 00 00 | 00 f8 3a 0e | 21 f1 93 03 | 1c 0c | 30 04 |
+
 #### Packet flags
+**21 88 78 0d**
+21 88:	1000 0100 0001 0001
+78 0D:	0001 1110 1011 0000
+
+| normal | ping | unknown | encrypted | compressed | unknown.. |
+|:---:|:----:|:-----------:|:-----------:|:-----:|:-----:|
+| 1 | 0 | 0 | 0 | 0 | 100 0001 0001 |
+
+NTF_CONNECT_UFS flags tells us that the packet is
+Normal:1 | Ping:0 | Encrypted:0 | Compressed:0
+
+#### Packet ID
+#### Payload
+**1d 00 00 00**
+first 4 bytes in a normal packet indicates the payload size
+
+
 ### Initial packet
 ```
 if gpacket.pid_name == "UF2C::NTF_CONNECT_UFS": # init packet
