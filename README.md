@@ -1,5 +1,5 @@
 # Gunz2-serveremulator
-Unfinished private server to gunz 2, current code in python isn't written for being a private server, it's just to help furthering the research and reversing packets.
+Unfinished server emulation to gunz 2, current code in python isn't written for being a private server, it's just to help furthering the research and reversing packets.
 
 ## Packet encryption/decryption unravel
 ### Grabbing the cryptkey
@@ -8,7 +8,7 @@ Packet encryption starts at 00EE4F5
 00EEF4F5  /$  55            PUSH EBP                                 ;  $Function WSASend 9 Encyption happens here
 00EEF4F6  |.  8BEC          MOV EBP,ESP
 00EEF4F8  |.  8A45 08       MOV AL,BYTE PTR [EBP+8]
-00EEF4FB  |.  3245 0C       XOR AL,BYTE PTR [EBP+C]                                 ; xor with cryptkey
+00EEF4FB  |.  3245 0C       XOR AL,BYTE PTR [EBP+C]                  ; xor with cryptkey
 00EEF4FE  |.  8B49 24       MOV ECX,DWORD PTR [ECX+24]
 00EEF501  |.  0FB6C0        MOVZX EAX,AL
 00EEF504  |.  66:D3E0       SHL AX,CL                                ; Always shifts with 2
@@ -29,6 +29,7 @@ Output of the cryptkey sample
 ```
 
 Bytes at position 4 and 5(e1,3c) is different for each new connection, the bytes are set by the initial packet when the connection are established.
+[See more on initial packet.](#initial-packet)
 
 ### Packet header
 This the NTF_CONNECT_UFS packet, the header is the first 20 bytes of the packet.
@@ -59,6 +60,18 @@ Normal:1 | Ping:0 | Encrypted:0 | Compressed:0
 **1d 00 00 00**<br/>
 first 4 bytes in a normal packet indicates the payload size
 
+#### Encrypted
+Packet with encryption flag needs to be decrypted, should include the full payload without the header.
+```python
+cdata = packet_crypt.decrypt(data[20:])
+```
+#### Compression/Decompresstion
+Some packets are encrypted and compressed, first decrypt then decompress the payload.
+Don't include the first 4 bytes of the payload with decompresstion. The 4 bytes represent the payload size.
+```python
+cdata = packet_crypt.decrypt(data[20:])
+decdata = (zlib.decompress(cdata[4:]))
+```
 
 ### Initial packet
 ```
@@ -78,8 +91,7 @@ def init_cryptkey(seed):
     cryptkey = cryptkey[:4] + packed + cryptkey[6:]
 ```
 
-### Compression/Decompresstion
-### Encyption translated into python
+### Encryptions/Decryptions in python
 ```python
 def _encrypt(msgchar, cryptkey):
     newstring = ""
@@ -94,4 +106,18 @@ def _encrypt(msgchar, cryptkey):
         newstring += (chr(b))
 
     return newstring
+
+def _decrypt(msgchar, cryptkey):
+    plaintext = ""
+    for i, c in enumerate(msgchar):
+        a = ord(c)
+        a ^= 0x0F0
+        b = (a & 3)
+        a >>= 2
+        b <<= 6
+        b = (a | b)
+        b ^= ord(cryptkey[i % 32])
+
+        plaintext += (chr(b))
+    return plaintext
 ```
