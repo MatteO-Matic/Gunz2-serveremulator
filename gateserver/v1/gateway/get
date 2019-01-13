@@ -2,7 +2,7 @@
   "status": "ok",
   "notice": "Temporary Server Maintenance",
   "gateway": {
-    "ip": "10.0.0.2",
+    "ip": "127.0.0.1",
     "port": 9090
   }
 }

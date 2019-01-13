@@ -103,7 +103,9 @@ class TheServer:
 
         recvmod.modrecv(self)
         data = self.data
-        self.channel[self.s].send(data)
+
+        if data != "":
+            self.channel[self.s].send(data)
 
 
 if __name__ == '__main__':

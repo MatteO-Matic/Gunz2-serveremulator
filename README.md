@@ -3,7 +3,7 @@ Unfinished server emulation to gunz 2, current code in python isn't written for 
 
 ## Packet encryption/decryption unravel
 ### Grabbing the cryptkey
-Packet encryption starts at 00EE4F5
+Packet encryption begins at memory address 00EEF4F5 (the function for decryption is also nearby this address).
 ```assembly
 00EEF4F5  /$  55            PUSH EBP                                 ;  $Function WSASend 9 Encyption happens here
 00EEF4F6  |.  8BEC          MOV EBP,ESP
@@ -56,7 +56,7 @@ NTF_CONNECT_UFS flags tells us that the packet is
 Normal:1 | Ping:0 | Encrypted:0 | Compressed:0
 
 #### Packet IDs and names
-Dumped IDs and respective names can be find in [log.txt](lobbyservber/log.txt)
+Dumped IDs and respective names can be found in [log.txt](lobbyservber/log.txt)
 ```python
 def get_packetname(ID):
     with open("./log.txt") as f:
@@ -68,7 +68,7 @@ def get_packetname(ID):
 ```
 ### Payload
 **1d 00 00 00**<br/>
-first 4 bytes in a normal packet indicates the payload size
+First 4 bytes in a normal packet indicates the payload size
 
 #### Encrypted
 Packet with encryption flag needs to be decrypted, should include the full payload without the header.

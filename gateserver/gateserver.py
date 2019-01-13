@@ -3,7 +3,7 @@ import SimpleHTTPServer
 import SocketServer
 import os
 
-os.chdir("./v1")
+os.chdir("./")
 PORT = 3000
 
 Handler = SimpleHTTPServer.SimpleHTTPRequestHandler

@@ -6,6 +6,7 @@ import re
 import struct
 import zlib
 import string
+import os
 
 import packet_crypt
 import gunz2packet
@@ -23,12 +24,12 @@ class Options(object):
 
     def __init__(self):
         self.show_output = 1
-        self.show_data = 0
-        self.show_data_decrypted = 0
+        self.show_data = 1
+        self.show_data_decrypted = 1
         self.show_flags = 1
         self.show_decrypted_text = 1
-        self.save_tofile = 0
-        self.emulate = 1
+        self.save_tofile = 1
+        self.emulate = 0
 
 def modrecv(self):
     """modrecv"""
@@ -46,6 +47,91 @@ def modrecv(self):
 
     if options.emulate:
         emulate_packet(self)
+
+    #if gpacket.pid_name == "C2UF::REQ_LOGIN":
+    #    self.data = ""
+    #    return
+    #if gpacket.pid_name == "UF2C::ACK_LOGIN":
+    #    self.data = ""
+    #    return
+    if gpacket.pid_name == "UF2C::NTF_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_CHARACTERLIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_USER_CASH":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_OWN_SCENARIO_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_PLAYER_SETUP_DATAS":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_MAIL_LIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_OWN_ACHIEVEMENT_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_ITEM_INSTANCE_LIST":
+        self.data = ""
+        return
+    #if gpacket.pid_name == "UF2C::NTF_CHANGE_STATE":
+    #    self.data = ""
+    #    return
+    if gpacket.pid_name == "UF2C::NTF_CLAN_GET_CLANINFOS":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_CLAN_GET_CLANINVITES":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_FRIENDLIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "C2UF::REQ_SELECT_CHARACTER":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::ACK_SELECT_CHARACTER":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_SELECT_CHARACTER":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_ITEM_INSTANCE_LIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "C2UF::REQ_CHANGE_USERBLOB":
+        self.data = ""
+        return
+    #if gpacket.pid_name == "UF2C::NTF_CHANGE_STATE":
+    #    self.data = ""
+    #    return
+    if gpacket.pid_name == "UF2C::NTF_PARTY_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "C2UF::REQ_EVENT_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_MISSION_CURRENT_LIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_DAILY_ATTEND_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::NTF_ITEM_INSTANCE_LIST":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::ACK_CHANGE_USERBLOB":
+        self.data = ""
+        return
+    if gpacket.pid_name == "UF2C::ACK_EVENT_INFO":
+        self.data = ""
+        return
+    if gpacket.pid_name == "C2UF::REQ_TESLA_MACHINE_LIST":
+        self.data = ""
+        return
 
     if gpacket.pid_name == "cmd::LOCAL::NTF_ACCEPT":
         options.show_output = 0
@@ -78,26 +164,43 @@ def modrecv(self):
             len(data))
         print(socket_info)
 
-        packet_header = "Hdata | Size:{2} | PID: {1:X}({0})".format(
+        # Header
+        packet_header = "Hdata | Size:{2} | Counter:{3} | Checksum:{4:X} | PID: {1:X}({0})".format(
             gpacket.pid_name,
             gpacket.pid,
-            gpacket.size)
+            gpacket.size,
+            gpacket.counter,
+            gpacket.checksum)
 
         print(packet_header)
 
+        # Save pretty data to file
+        pretty_data = ""
+
         # Print binary flags
         if options.show_flags:
-            print_flags = "Flags | Normal:{0} | Ping:{1} | Encrypted:{2} | Compressed:{3} |".format(
+            print_flags = "Flags | Normal:{0} | Ping:{1} | Encrypted:{2} | Compressed:{3} | AppSessionID:{4} | SenderID(S=13;C=9):{5} | Rand:{6} | SessionID:{7}".format(
                 gpacket.flags.is_normal,
                 gpacket.flags.is_ping,
                 gpacket.flags.is_encrypted,
-                gpacket.flags.is_compressed
+                gpacket.flags.is_compressed,
+                gpacket.flags.app_session_id,
+                gpacket.flags.sender_id,
+                (gpacket.flags.rawflags >> 8) & 0xFF,
+                (gpacket.flags.rawflags >> 16) & 0xFF
+                #gpacket.flags.rand_seed
             )
+            #self.session_id = (rawflags >> 5) & 0xFF
             print("{0:b}".format(gpacket.rawflags))
             print(print_flags)
 
         if options.show_data:
-            print_hex(data)
+            # show header without decrypting
+            print_hex(data[:20])
+            print("-----")
+            print_hex(data[20:])
+            pretty_data = pretty_hex(data[20:])
+
         if options.show_data_decrypted:
             if packet_crypt.isInit:
                 # show header without decrypting
@@ -107,8 +210,10 @@ def modrecv(self):
                 if gpacket.flags.is_compressed:
                     decdata = (zlib.decompress(cdata[4:]))
                     print_hex(decdata)
+                    pretty_data = pretty_hex(decdata)
                 else:
                     print_hex(cdata)
+                    pretty_data = pretty_hex(cdata)
                 # printing out payload
                 # plength = struct.unpack("I", cdata[:4])
                 # print (plength)
@@ -129,30 +234,38 @@ def modrecv(self):
 
         print("\n")
 
-        #if options.save_tofile:
-        #    with open("out/orderinfo", 'a+') as f:
-        #        # Order and if compressed / encrypted
-        #        f.write("\n")
-        #    i = 0
-        #    while not os.path.isfile("out/{0}_{1}".format(gpacket.pid_name, i)):
-        #        i = i + 1
-        #        with open("out/{0}".format(gpacket.pid_name), 'a+') as f:
-        #            f.write(print_data)
+        if options.save_tofile:
+            if gpacket.flags.is_normal:
+                pid_name_safe = re.sub('[^\w\-_\. ]', '_', gpacket.pid_name)
+            else:
+                pid_name_safe = "None"
 
-                #  f.write("\n")
-                #  f.write("\n")
-                #  f.write(socket_info)
-                #  f.write("\n")
-                #  f.write(packet_header)
-                #  f.write("\n")
-                #  f.write("{0:b}".format(gpacket.rawflags))
-                #  f.write("\n")
-                #  f.write(print_flags)
-                #  f.write("\n")
-                #  f.write(print_data)
-                #  f.write("\n")
-                #  f.write(print_plain)
-                #  f.write("\n")
+
+            with open("out/orderinfo", 'a+') as f:
+                f.write(pid_name_safe)
+                f.write("\n")
+#            while not os.path.isfile("out/{0}_{1}".format(pid_name_safe, i)):
+                #i = i + 1
+            with open("out/{0}".format(pid_name_safe), 'a+') as f:
+                f.write("\n")
+                f.write("\n")
+                f.write(socket_info)
+                f.write("\n")
+                f.write(packet_header)
+                f.write("\n")
+                f.write("{0:b}".format(gpacket.rawflags))
+                f.write("\n")
+                f.write(print_flags)
+                f.write("\n")
+                f.write(pretty_hex(data[:20])) # header bytes
+                f.write("\n-----\n")
+                if pid_name_safe == "None":
+                    f.write(pretty_hex(data))
+                else:
+                    f.write(pretty_data)
+                f.write("\n")
+                f.write(print_plain)
+                f.write("\n")
 
 def print_hex(data):
     """print out hex data in "AB CD EF" fashion"""
@@ -161,6 +274,14 @@ def print_hex(data):
 
     print_data = (re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL))
     print(print_data)
+
+def pretty_hex(data):
+    """print out hex data in "AB CD EF" fashion"""
+    _it = iter(binascii.b2a_hex(data))
+    pdata = " ".join(a + b for a, b in zip(_it, _it))
+
+    print_data = (re.sub("(.{60})", "\\1\n", pdata, 0, re.DOTALL))
+    return print_data
 
 def emulate_packet(self):
     """emulate_packet"""
@@ -172,9 +293,23 @@ def emulate_packet(self):
         self.data = "\x02\x00\x00\x00\x14\x00\x00\x00\x00\x98\x07\x00\x00\x00\x00\x00\x05\x00\x00\x00"
     elif pid == '\x07\x00': #NONE 007
         pass
+    elif pid == '\xEC\x04': # REQ_CHATTING_CHAT_CHANNEL
+        # self.da
+        # calculate checksum
+        print("------------")
+        gpacket = gunz2packet.Gunz2Packet(data)
+        checksum = calc_checksum(data[20:], gpacket.size)
+        print("calc: {0:X} / {1:X}".format(checksum, gpacket.checksum))
+        print("------------")
     else:
         pass
 
+
+def calc_checksum(payload, packet_size):
+    checksum = 0
+    for c in payload:
+        checksum += ord(c)
+    return checksum - (packet_size + 1)
 
 # def handle_ping(self):
 #     data = self.data
